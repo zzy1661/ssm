@@ -42,8 +42,21 @@ public class HttpStatusTest {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResult);
 	}
 	@RequestMapping(value="/ok")
-	public ResponseEntity<?> statusTest(){
+	public ResponseEntity<?> okTest(){
 		return ResponseEntity.ok("ok");
 	}
-
+	@RequestMapping(value="/timeout")
+	public ResponseEntity<?> timeoutTest(){
+		return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(null);
+	}
+	@RequestMapping(value="/wait")
+	public ResponseEntity<?> waitTest() {
+		try {
+			this.wait(10000);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(null);
+	}
 }
